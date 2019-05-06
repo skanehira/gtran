@@ -46,9 +46,14 @@ func translate() (string, error) {
 
 func run() int {
 	flag.Parse()
-	if *text == "" {
+	args := flag.Args()
+	if len(args) == 0 && *text == "" {
 		flag.Usage()
 		return -1
+	}
+
+	if *text == "" && args[0] != "" {
+		*text = args[0]
 	}
 
 	result, err := translate()
