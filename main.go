@@ -17,9 +17,9 @@ var (
 // required to translate language flags
 var (
 	// source language
-	source = flag.String("source", "ja", "translate source")
+	source = flag.String("source", "en", "translate source")
 	// target language
-	target = flag.String("target", "en", "translate traget")
+	target = flag.String("target", "ja", "translate traget")
 	// source language text
 	text = flag.String("text", "", "translate source text")
 )
