@@ -27,10 +27,13 @@ $ go install
 ```sh
 $ gtran -h
 Usage of gtran:
+  -endpoint string
+        translate endpoint (default "https://script.google.com/macros/s/AKfycbzi15QCo0IsjutiMnI5FYf43
+-TKqfrUDiaM03x5C5IcH7-setg/exec?")
   -source string
-        translate source (default "ja")
+        translate source (default "en")
   -target string
-        translate traget (default "en")
+        translate traget (default "ja")
   -text string
         translate source text
 

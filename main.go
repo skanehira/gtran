@@ -9,11 +9,6 @@ import (
 	"os"
 )
 
-var (
-	// Use the Google Apps Script to translate language
-	endpoint = "https://script.google.com/macros/s/AKfycbzi15QCo0IsjutiMnI5FYf43-TKqfrUDiaM03x5C5IcH7-setg/exec?"
-)
-
 // required to translate language flags
 var (
 	// source language
@@ -22,16 +17,18 @@ var (
 	target = flag.String("target", "ja", "translate traget")
 	// source language text
 	text = flag.String("text", "", "translate source text")
+	// Use the Google Apps Script to translate language
+	endpoint = flag.String("endpoint", "https://script.google.com/macros/s/AKfycbzi15QCo0IsjutiMnI5FYf43-TKqfrUDiaM03x5C5IcH7-setg/exec?", "translate endpoint")
 )
 
 // translate language
-func translate() (string, error) {
+func translate(text, source, target string) (string, error) {
 	v := url.Values{}
-	v.Add("text", *text)
-	v.Add("source", *source)
-	v.Add("target", *target)
+	v.Add("text", text)
+	v.Add("source", source)
+	v.Add("target", target)
 
-	resp, err := http.Get(endpoint + v.Encode())
+	resp, err := http.Get(*endpoint + v.Encode())
 	if err != nil {
 		return "", err
 	}
@@ -44,9 +41,7 @@ func translate() (string, error) {
 	return string(body), nil
 }
 
-func run() int {
-	flag.Parse()
-	args := flag.Args()
+func run(args []string) int {
 	if len(args) == 0 && *text == "" {
 		flag.Usage()
 		return -1
@@ -56,7 +51,7 @@ func run() int {
 		*text = args[0]
 	}
 
-	result, err := translate()
+	result, err := translate(*text, *source, *target)
 	if err != nil {
 		return -1
 	}
@@ -65,5 +60,6 @@ func run() int {
 }
 
 func main() {
-	os.Exit(run())
+	flag.Parse()
+	os.Exit(run(flag.Args()))
 }
