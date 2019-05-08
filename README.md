@@ -14,7 +14,7 @@ function doGet(e) {
 }
 ```
 
-You can set env `GOTRAN_ENDPOINT` or use the flag `-endpoint` to set yourself GAS endpoint.  
+You can set env `GTRAN_ENDPOINT` or use the flag `-endpoint` to set yourself GAS endpoint.  
 Env takes precedence.
 
 # Requirement
