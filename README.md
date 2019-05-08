@@ -1,5 +1,5 @@
 # gtran
-gtran is Google translate CLI tool it written in Go.
+gtran is Google translate CLI tool it written in Go.  
 The translate api endpoint maked by Google Apps Script LanguageApp.
 
 # About translate api endpoint
@@ -12,6 +12,9 @@ function doGet(e) {
   return ContentService.createTextOutput(translatedText);
 }
 ```
+
+You can set env `GOTRAN_ENDPOINT` or use the flag `-endpoint` to set yourself GAS endpoint.  
+Env takes precedence.
 
 # Requirement
 - Go 1.12 or higher

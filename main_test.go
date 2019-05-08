@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"os"
 	"testing"
 )
 
@@ -32,17 +33,21 @@ func TestTranslate(t *testing.T) {
 
 	t.Run("run test", func(t *testing.T) {
 		tests := []struct {
-			text string
-			args []string
-			want int
+			text     string
+			args     []string
+			endpoint string
+			want     int
 		}{
-			{"", []string{}, -1},
-			{"", []string{"hello"}, 0},
-			{"hello", []string{}, 0},
+			{"", []string{}, "", -1},
+			{"", []string{"hello"}, "", 0},
+			{"hello", []string{}, "", 0},
+			{"hello", []string{}, "invalid_endpoint", -1},
 		}
 
 		for i, test := range tests {
-
+			if test.endpoint != "" {
+				os.Setenv("GTRAN_ENDPOINT", test.endpoint)
+			}
 			if test.text != "" {
 				flag.CommandLine.Set("text", test.text)
 			}

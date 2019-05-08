@@ -42,6 +42,11 @@ func translate(text, source, target string) (string, error) {
 }
 
 func run(args []string) int {
+	envEndpoint := os.Getenv("GTRAN_ENDPOINT")
+	if envEndpoint != "" {
+		*endpoint = envEndpoint
+	}
+
 	if len(args) == 0 && *text == "" {
 		flag.Usage()
 		return -1
