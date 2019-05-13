@@ -1,6 +1,6 @@
 # gtran
 gtran is Google translate CLI tool it written in Go.  
-The translate api endpoint maked by Google Apps Script LanguageApp.
+this using the translate api endpoint maked by Google Apps Script LanguageApp.  
 Also, this used in vim plugin [translate.vim](https://github.com/skanehira/translate.vim)
 
 # About translate api endpoint
@@ -28,6 +28,9 @@ $ go install
 ```
 
 # Usage
+The language code is bellow.  
+https://cloud.google.com/translate/docs/languages
+
 ```sh
 $ gtran -h
 Usage of gtran:
