@@ -7,8 +7,18 @@ Also, this used in vim plugin [translate.vim](https://github.com/skanehira/trans
 Translate logic.
 
 ```js
-function doGet(e) {
-  var p = e.parameter;
+function doPost(e) {
+  var p = JSON.parse(e.postData.getDataAsString());
+  if (p.text == "") {
+    return ContentService.createTextOutput("text is empty");
+  }
+  if (p.source == "") {
+    return ContentService.createTextOutput("source is empty");
+  }
+  if (p.target == "") {
+    return ContentService.createTextOutput("target is empty");
+  }
+  
   var translatedText = LanguageApp.translate(p.text, p.source, p.target);
   return ContentService.createTextOutput(translatedText);
 }
@@ -32,11 +42,9 @@ The language code is bellow.
 https://cloud.google.com/translate/docs/languages
 
 ```sh
-$ gtran -h
 Usage of gtran:
   -endpoint string
-        translate endpoint (default "https://script.google.com/macros/s/AKfycbzi15QCo0IsjutiMnI5FYf43
--TKqfrUDiaM03x5C5IcH7-setg/exec?")
+        translate endpoint (default "https://script.google.com/macros/s/AKfycbywwDmlmQrNPYoxL90NCZYjoEzuzRcnRuUmFCPzEqG7VdWBAhU/exec")
   -source string
         translate source (default "en")
   -target string

@@ -1,11 +1,12 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"net/url"
 	"os"
 )
 
@@ -18,20 +19,32 @@ var (
 	// source language text
 	text = flag.String("text", "", "translate source text")
 	// Use the Google Apps Script to translate language
-	endpoint = flag.String("endpoint", "https://script.google.com/macros/s/AKfycbzi15QCo0IsjutiMnI5FYf43-TKqfrUDiaM03x5C5IcH7-setg/exec?", "translate endpoint")
+	endpoint = flag.String("endpoint", "https://script.google.com/macros/s/AKfycbywwDmlmQrNPYoxL90NCZYjoEzuzRcnRuUmFCPzEqG7VdWBAhU/exec", "translate endpoint")
 )
+
+type post struct {
+	Text   string `json:"text"`
+	Source string `json:"source"`
+	Target string `json:"target"`
+}
 
 // translate language
 func translate(text, source, target string) (string, error) {
-	v := url.Values{}
-	v.Add("text", text)
-	v.Add("source", source)
-	v.Add("target", target)
-
-	resp, err := http.Get(*endpoint + v.Encode())
+	postData, err := json.Marshal(post{text, source, target})
 	if err != nil {
 		return "", err
 	}
+
+	req, err := http.NewRequest(http.MethodPost, *endpoint, bytes.NewBuffer([]byte(postData)))
+
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
