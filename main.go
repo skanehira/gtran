@@ -37,6 +37,10 @@ func translate(text, source, target string) (string, error) {
 
 	req, err := http.NewRequest(http.MethodPost, *endpoint, bytes.NewBuffer([]byte(postData)))
 
+	if err != nil {
+		return "", err
+	}
+
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
