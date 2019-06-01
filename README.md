@@ -32,9 +32,7 @@ Env takes precedence.
 
 # Install
 ```sh
-$ git clone https://github.com/skanehira/gtran.git
-$ cd gtran
-$ go install
+$ go get github.com/skanehira/gtran
 ```
 
 # Usage
