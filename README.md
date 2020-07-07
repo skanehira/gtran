@@ -52,9 +52,9 @@ Usage of gtran:
   -text string
         translate source text
 
-$ gtran -text "海賊王におれはなる"
+$ gtran -source=ja -target=en -text "海賊王におれはなる"
 Become a Pirate King
 
-$ gtran -source=en -target=ja -text="Become a Pirate King"
+$ gtran -text="Become a Pirate King"
 海賊王になる
 ```
