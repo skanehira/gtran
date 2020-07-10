@@ -35,16 +35,7 @@ func translate(text, source, target string) (string, error) {
 		return "", err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, *endpoint, bytes.NewBuffer([]byte(postData)))
-
-	if err != nil {
-		return "", err
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
+	resp, err := http.Post(*endpoint, "application/json", bytes.NewBuffer(postData))
 	if err != nil {
 		return "", err
 	}
@@ -75,6 +66,7 @@ func run(args []string) int {
 
 	result, err := translate(*text, *source, *target)
 	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
 		return -1
 	}
 	fmt.Println(result)
